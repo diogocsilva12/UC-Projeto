@@ -1,0 +1,115 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
+\title{Storing Audio Data in Vector Databases: Options and Implementation}
+\author{Your Name}
+\date{\today}
+
+\begin{document}
+
+\maketitle
+
+
+
+\section{O que é uma base de dados vetorial?}
+
+Segundo a \textit{Cloudfare} \cite{cloudflare_vector_db}, uma base de dados vetorial é uma coleção de dados armazenados como representações matemáticas. Estes sistemas facilitam a memória de \textit{inputs} anteriores, permitindo o uso de inteligência artificial para prever \textit{outputs} futuros e recomendações. Ao invés dos dados serem identificados com técnicas de \textit{pattern matching} ou \textit{indexing}, os vetores são comparados com base em sua similaridade matemática.
+
+No âmbito do nosso trabalho, um exemplo prático para a utilização destes sistemas é, por exemplo, uma plataforma de streaming de música que possui um algoritmo que recomenda músicas semelhantes àquelas que o utilizador já escutou. Para tal, o algoritmo compara os vetores das músicas que o utilizador já ouviu com os vetores de todas as músicas disponíveis na plataforma, e recomenda aquelas que apresentam maior similaridade.
+
+Estas bases de dados permitem que os programas façam comparações, identifiquem relações e compreendam o contexto, o que permite a criação de sistemas avançados de inteligência artificial, como os modelos de linguagem de larga escala (LLMs).
+
+\section{Comparação entre Sistemas de Bases de Dados Vetoriais}
+
+Atualmente, existem diversos sistemas de bases de dados vetoriais que permitem armazenar e pesquisar dados de forma eficiente. Nesta secção, iremos comparar as opções mais populares ao nosso dispor, destacando as suas principais características, vantagens e limitações, assim como explicar o porque de escolhermos o Weaviate para o nosso sistema de armazenamento e recuperação de áudio.
+
+\subsection{Weaviate}
+
+\textbf{Overview:} Weaviate: Open-source, combina pesquisa vetorial com filtragem estruturada e suporta múltiplos tipos de dados (texto, imagens, áudio). Possui uma API GraphQL flexível e escalabilidade horizontal.
+
+
+\subsection{Pinecone}
+
+\textbf{Overview:} Pinecone: Serviço totalmente gerido, fácil de usar e com alto desempenho, mas é um sistema fechado e não open-source.
+
+\subsection{Qdrant}
+
+\textbf{Overview:} Otimizado para pesquisas vetoriais filtráveis, oferece bom desempenho e eficiência, mas tem uma comunidade menor e menos integrações.
+
+
+\subsection{Chroma}
+
+\textbf{Overview:} Focado em aplicações de LLM e RAG, é simples de integrar e utilizar, mas ainda não é tão maduro nem escalável quanto outras soluções.
+
+
+\section{Porque é que escolhemos o Weviate?}
+
+Após analisar as opções, optámos pelo Weaviate para o nosso sistema de armazenamento de áudio por várias razões:
+
+\begin{enumerate}
+    \item \textbf{Capacidade de pesquisa híbrida:} permite pesquisa por similiaridade vetorial assim como filtragem estruturada, o que é essencial para a nossa aplicação.
+    
+    \item \textbf{Flexibilidade de esquema:} permite representar ficheiros de áudio com diferentes propriedades e relações.
+    
+    \item \textbf{API GraphQL:} que simplifica a interação com a base de dados e permite uma integração mais fácil com outras aplicações.
+    
+    \item \textbf{Open-Source:} o Weaviate tem uma comunidade ativa de desenvolvimento com atualizações regulares e melhorias. 
+        
+    \item \textbf{Documentação de qualidade:} agiliza o processo de desenvolvimento
+\end{enumerate}
+
+Embora o Pinecone seja mais simples de configurar e escalar automaticamente, não é open-source, o que limita a personalização e controlo sobre os dados. Milvus poderia ser uma alternativa com maior desempenho em bases de dados extremamente grandes, mas o Weaviate apresentou o melhor equilíbrio entre funcionalidades, flexibilidade e facilidade de uso.
+
+Professor, considera que esta é a melhor escolha para o nosso caso, ou acha que deveríamos considerar outra solução?
+
+\section{Representação de ficheiros de audio em vetores}
+
+\subsection{Como podemos converter os ficheiros de audios em vetores ?}
+
+\subsection{Plano de implementação}
+
+
+
+\subsection{1º: Setup da base de dados}
+
+
+\subsection{2º: Desenho do esquema da base de dados}
+
+
+\subsection{3: Processar o audio}
+
+
+
+\subsection{4º: Recolher os metadados do audio e converter em vetores}
+
+\subsection{5º: Alimentar a base de dados com os dados que recolhemos }
+
+Usar uma API? 
+
+\subsection{6º: Desenvolver queries ao sistema... desenvolver os parametros de similiaridade}
+
+\subsection{7º Desenvolver uma GUI? }
+
+
+\section{Desafios e Limitações: }
+
+Trabalhar com vetores de audio apresenta vários desafios:
+
+\begin{itemize}
+    \item Variabilidade de qualidade do audio  
+    \item Custo computacional do pré-processamento e extração de características do audio
+    \item Equilibrar a precisão do vetor com os requisitos de armazenamento/desempenho
+\end{itemize}
+
+
+
+% Bibliography
+\bibliographystyle{plain}  % or another style like 'alpha', 'ieeetr', 'acm', etc.
+\bibliography{references}  % refers to example.bib
+
+\end{document}
