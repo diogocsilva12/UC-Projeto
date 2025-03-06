@@ -1,14 +1,14 @@
 # Fdb version 4
-["bibtex ideias"] 1741260657.23074 "ideias.aux" "ideias.bbl" "ideias" 1741260658.36864 0
+["bibtex ideias"] 1741261212.57457 "ideias.aux" "ideias.bbl" "ideias" 1741267307.45126 0
   "./references.bib" 1741113178.21996 325 949756764eb93e05bc419fe29d0190db ""
   "/usr/local/texlive/2024/texmf-dist/bibtex/bst/base/plain.bst" 1292289607 20613 bd3fbfa9f64872b81ac57a0dd2ed855f ""
-  "ideias.aux" 1741260657.94445 2761 c010e3ce3efdee0a1c3b6a9acfbfa7e3 "pdflatex"
+  "ideias.aux" 1741267307.10599 2761 c010e3ce3efdee0a1c3b6a9acfbfa7e3 "pdflatex"
   (generated)
   "ideias.bbl"
   "ideias.blg"
   (rewritten before read)
-["pdflatex"] 1741260657.37473 "/Users/diogokeeper12/Documents/GitHub/UC-Projeto/build/ideias.tex" "ideias.pdf" "ideias" 1741260658.36877 0
-  "/Users/diogokeeper12/Documents/GitHub/UC-Projeto/build/ideias.tex" 1741259674.75324 5285 c414909c6a749dc0964b67dc671cb94e ""
+["pdflatex"] 1741267306.46245 "/Users/diogokeeper12/Documents/GitHub/UC-Projeto/build/ideias.tex" "ideias.pdf" "ideias" 1741267307.45153 0
+  "/Users/diogokeeper12/Documents/GitHub/UC-Projeto/build/ideias.tex" 1741267306.23423 5286 54aebd735d296c62da06b6be5f19494d ""
   "/usr/local/texlive/2024/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/jknappen/ec/tcbx1200.tfm" 1136768653 1536 c09172c8f235393e6235bb4758357c41 ""
@@ -95,10 +95,10 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1740931903.72124 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1740931816 8221448 859a2ebbc4aecbc7967061d11ca0f659 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "ideias.aux" 1741260657.94445 2761 c010e3ce3efdee0a1c3b6a9acfbfa7e3 "pdflatex"
-  "ideias.bbl" 1741260657.37293 174 a733f4fc895eff0b2609c913ca16715a "bibtex ideias"
-  "ideias.out" 1741260657.94536 4289 85805101938de169d7d7a3ae329cd917 "pdflatex"
-  "ideias.tex" 1741259674.75324 5285 c414909c6a749dc0964b67dc671cb94e ""
+  "ideias.aux" 1741267307.10599 2761 c010e3ce3efdee0a1c3b6a9acfbfa7e3 "pdflatex"
+  "ideias.bbl" 1741261212.66435 174 a733f4fc895eff0b2609c913ca16715a "bibtex ideias"
+  "ideias.out" 1741267307.10642 4289 85805101938de169d7d7a3ae329cd917 "pdflatex"
+  "ideias.tex" 1741267306.23423 5286 54aebd735d296c62da06b6be5f19494d ""
   (generated)
   "ideias.aux"
   "ideias.log"

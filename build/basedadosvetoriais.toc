@@ -1,0 +1,6 @@
+\beamer@sectionintoc {1}{O que é uma base de dados vetorial?}{3}{0}{1}
+\beamer@sectionintoc {2}{Comparação entre Sistemas de Bases de Dados Vetoriais}{5}{0}{2}
+\beamer@sectionintoc {3}{Porque escolhemos o Weaviate?}{9}{0}{3}
+\beamer@sectionintoc {4}{Representação de ficheiros de áudio em vetores}{11}{0}{4}
+\beamer@sectionintoc {5}{Plano de implementação}{12}{0}{5}
+\beamer@sectionintoc {6}{Desafios e Limitações}{19}{0}{6}
