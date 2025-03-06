@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1741267333.88153 "/Users/diogokeeper12/Documents/GitHub/UC-Projeto/build/basedadosvetoriais.tex" "basedadosvetoriais.pdf" "basedadosvetoriais" 1741267335.49469 0
-  "/Users/diogokeeper12/Documents/GitHub/UC-Projeto/build/basedadosvetoriais.tex" 1741267332.11226 7707 64a8df2ae1e76cdf6c489262bd8177b7 ""
+["pdflatex"] 1741267535.89866 "/Users/diogokeeper12/Documents/GitHub/UC-Projeto/build/basedadosvetoriais.tex" "basedadosvetoriais.pdf" "basedadosvetoriais" 1741267537.71405 0
+  "/Users/diogokeeper12/Documents/GitHub/UC-Projeto/build/basedadosvetoriais.tex" 1741267535.61956 7728 f30c7b3c5cfda8ff3e1d30507d7b290c ""
   "/usr/local/texlive/2024/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmr10.tfm" 1136768653 1296 45809c5a464d5f32c8f98ba97c1bb47f ""
   "/usr/local/texlive/2024/texmf-dist/fonts/tfm/public/cm/cmss10.tfm" 1136768653 1316 b636689f1933f24d1294acdf6041daaa ""
@@ -184,11 +184,11 @@
   "/usr/local/texlive/2024/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1740931903.72124 5467645 128b85b7cde5f5edc5cb7f1dd7ff8736 ""
   "/usr/local/texlive/2024/texmf-var/web2c/pdftex/pdflatex.fmt" 1740931816 8221448 859a2ebbc4aecbc7967061d11ca0f659 ""
   "/usr/local/texlive/2024/texmf.cnf" 1710266656 577 e590dabc9e28c5b61546e15f63eebcdf ""
-  "basedadosvetoriais.aux" 1741267335.40757 5235 26b325549a15f9d86dd2df5e7f6f39ca "pdflatex"
-  "basedadosvetoriais.nav" 1741267335.40877 3359 9060981dd8269288621e876cb25acf7b "pdflatex"
-  "basedadosvetoriais.out" 1741267335.40858 1399 fc409de2f9c6be29da909b6e10272a84 "pdflatex"
-  "basedadosvetoriais.tex" 1741267332.11226 7707 64a8df2ae1e76cdf6c489262bd8177b7 ""
-  "basedadosvetoriais.toc" 1741267335.40879 435 7a445164647df78b04931afa97d70ef9 "pdflatex"
+  "basedadosvetoriais.aux" 1741267537.6244 5235 26b325549a15f9d86dd2df5e7f6f39ca "pdflatex"
+  "basedadosvetoriais.nav" 1741267537.62578 3359 9060981dd8269288621e876cb25acf7b "pdflatex"
+  "basedadosvetoriais.out" 1741267537.6255 1399 fc409de2f9c6be29da909b6e10272a84 "pdflatex"
+  "basedadosvetoriais.tex" 1741267535.61956 7728 f30c7b3c5cfda8ff3e1d30507d7b290c ""
+  "basedadosvetoriais.toc" 1741267537.62582 435 7a445164647df78b04931afa97d70ef9 "pdflatex"
   (generated)
   "basedadosvetoriais.aux"
   "basedadosvetoriais.log"
