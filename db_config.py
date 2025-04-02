@@ -21,7 +21,7 @@ def init_database():
         client.create_collection(
             collection_name="audio_collection",
             dimension=1536,
-            metric_type="COSINE"
+            metric_type="COSINE" 
         )
         print("Coleção de áudio criada!")
     

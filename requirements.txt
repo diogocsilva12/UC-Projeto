@@ -1,0 +1,12 @@
+pymilvus
+numpy
+pandas
+matplotlib
+librosa
+tqdm
+torch
+transformers
+scikit-learn
+tensorflow
+tensorflow-hub
+openl3
