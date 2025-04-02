@@ -69,25 +69,6 @@ services:
       - "8000:3000"
     depends_on:
       - standalone
-      
-  # New service for audio embeddings
-  audio-embeddings:
-    container_name: audio-embeddings
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/app
-      - ./audio_data/data:/app/audio_data
-    environment:
-      MILVUS_URI: "http://standalone:19530"
-      AUDIO_DIR: "/app/audio_data/genres_original"
-    depends_on:
-      - standalone
-    # The command was broken across multiple lines incorrectly
-    #command: >
-    #  python -c "print('Audio embedding container started - run manually with: docker exec -it audio-embeddings python audio_embedding_benchmark.py')"
-
 
 networks:
   default:
