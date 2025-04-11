@@ -1,6 +1,8 @@
 version: '3.5'
 
 services:
+  # Etcd: Serviço de configuração para o Milvus
+
   etcd:
     container_name: milvus-etcd
     image: quay.io/coreos/etcd:v3.5.18
@@ -17,6 +19,8 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
+
+  # MinIO: Serviço de armazenamento de objetos para o Milvus
 
   minio:
     container_name: milvus-minio
@@ -35,6 +39,8 @@ services:
       interval: 30s
       timeout: 20s
       retries: 3
+
+  # Milvus: Servidor principal da base de dados vetorial
 
   standalone:
     container_name: milvus-standalone
@@ -59,6 +65,8 @@ services:
     depends_on:
       - "etcd"
       - "minio"
+
+  # Attu: Interface web para gestão do Milvus
 
   attu:
     container_name: milvus-attu
