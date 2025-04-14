@@ -2,6 +2,7 @@
 # Descrição: Configuração da ligação à base de dados vetorial Milvus
 
 from pymilvus import MilvusClient
+import pymilvus
 
 def get_client():
     """
@@ -14,7 +15,7 @@ def get_client():
 
 def init_database():
     """
-    Inicializa a base de dados e cria as coleções necessárias, se não existirem.
+    Inicializa a base de dados e cria a coleção de áudio.
     
     Returns:
         MilvusClient: Cliente conectado ao Milvus.
@@ -22,51 +23,48 @@ def init_database():
     client = get_client()
     
     # Verifica se a ligação está a funcionar
-    print("Ligado ao Milvus:", client.has_collection("test_collection"))
+    connection_ok = client.list_collections() is not None
+    print("Ligado ao Milvus:", connection_ok)
     
-    # Cria a coleção para os vetores de áudio se não existir
-    if not client.has_collection("audio_collection"):
-        client.create_collection(
-            collection_name="audio_collection",
-            dimension=1536,  # Dimensão do vetor de embeddings
-            metric_type="COSINE"  # Métrica de similaridade (cosseno)
-        )
-        print("Coleção de áudio criada!")
+    # Verifica se a coleção existe
+    if client.has_collection("audio_collection"):
+        # Se existir, vamos eliminá-la para recriá-la com a dimensão correta
+        print("A eliminar coleção anterior para recriação...")
+        client.drop_collection("audio_collection")
+    
+    # Cria a coleção para os vetores de áudio
+    print("A criar nova coleção com dimensão 768...")
+    client.create_collection(
+        collection_name="audio_collection",
+        dimension=768,  # Dimensão do vetor de embeddings para Wav2Vec2
+        metric_type="COSINE",  # Métrica de similaridade (cosseno)
+        # Definir explicitamente que o campo ID é inteiro
+        primary_field_name="id",
+        primary_field_type=pymilvus.DataType.INT64
+    )
+    print("Coleção de áudio criada!")
+    
+    # Criar alguns dados de teste
+    test_vectors = [
+        {"id": 1, "vector": [0.1] * 768, "filename": "teste1.mp3"},
+        {"id": 2, "vector": [0.2] * 768, "filename": "teste2.mp3"},
+        {"id": 3, "vector": [0.3] * 768, "filename": "teste3.mp3"}
+    ]
+    
+    # Inserir dados de teste
+    client.insert(
+        collection_name="audio_collection",
+        data=test_vectors
+    )
+    print("Dados de teste inseridos!")
+    
+    # Mostrar contagem de registos
+    count = client.get_collection_stats("audio_collection")
+    print(f"Total de registos: {count['row_count']}")
     
     return client
 
-
-# Código de teste (deve ser movido para um ficheiro de teste separado)
+# Executar se o script for executado diretamente
 if __name__ == "__main__":
-    client = init_database()
-    
-    # Inserir dados de exemplo
-    try:
-        # Criar vetor de teste
-        test_vector = [0.1] * 1536
-        
-        # Inserir o vetor na coleção
-        client.insert(
-            collection_name="audio_collection",
-            data=[
-                {"id": "1", "vector": test_vector, "filename": "teste1.mp3"},
-                {"id": "2", "vector": [0.2] * 1536, "filename": "teste2.mp3"}
-            ]
-        )
-        print("Dados inseridos com sucesso!")
-        
-        # Contar registos na coleção
-        count = client.get_collection_stats("audio_collection")
-        print(f"Total de registos: {count['row_count']}")
-        
-        # Fazer uma pesquisa simples
-        results = client.search(
-            collection_name="audio_collection",
-            data=[test_vector],
-            limit=5,
-            output_fields=["id", "filename"]
-        )
-        print("Resultados da pesquisa:", results)
-        
-    except Exception as e:
-        print(f"Erro ao manipular dados: {e}")
+    init_database()
+    print("Base de dados inicializada com sucesso.")
