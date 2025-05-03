@@ -1,0 +1,25 @@
+Resumo dos tempos médios por modelo:
+          tempo_extracao  tempo_insercao  memoria_peak_mb
+modelo                                                   
+openl3         34.248162        0.056928       141.249126
+vggish          0.665015        0.034259        15.961458
+wav2vec2        4.153268        0.043102        25.862768
+yamnet          4.508096        0.052306        48.058454
+
+Número de vetores inseridos por modelo:
+modelo
+openl3      19
+vggish      19
+wav2vec2    19
+yamnet      19
+
+Descrição estatística detalhada:
+       tempo_extracao  tempo_insercao  memoria_peak_mb     dimensao  tamanho_audio_mb  duracao_audio_s  repeat
+count       76.000000       76.000000        76.000000    76.000000         76.000000        76.000000    76.0
+mean        10.893635        0.046649        57.782951   608.000000          0.856242        29.983450     1.0
+std         14.128460        0.018476        54.820799   333.210004          0.146607         0.011579     0.0
+min          0.465641        0.026649        15.255564   128.000000          0.458238        29.976576     1.0
+25%          2.479400        0.036479        15.255594   416.000000          0.916226        29.976576     1.0
+50%          3.743017        0.042883        47.793946   640.000000          0.916231        29.976576     1.0
+75%         21.625432        0.048005       140.796242   832.000000          0.917031        30.002698     1.0
+max         49.652935        0.143055       216.725972  1024.000000          0.917392        30.002698     1.0

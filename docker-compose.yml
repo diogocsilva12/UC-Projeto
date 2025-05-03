@@ -78,6 +78,21 @@ services:
     depends_on:
       - standalone
 
+  # Audio Benchmark: Serviço de benchmark de áudio
+
+  audio-benchmark:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: audio-benchmark
+    volumes:
+      - .:/app
+      - ./audio_data:/app/audio_data
+    environment:
+      MILVUS_URI: "http://standalone:19530"
+    depends_on:
+      - standalone
+
 networks:
   default:
     name: milvus

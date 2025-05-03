@@ -1,0 +1,12 @@
+pymilvus
+librosa
+tqdm
+torch
+transformers
+tensorflow
+tensorflow-hub
+openl3
+pandas
+matplotlib
+mutagen
+seaborn

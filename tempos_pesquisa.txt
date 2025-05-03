@@ -1,0 +1,5 @@
+  modelo  tempo_pesquisa_s
+wav2vec2                 0
+  vggish                 0
+  openl3                 0
+  yamnet                 0
