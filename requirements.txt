@@ -14,3 +14,4 @@ streamlit
 GPUtil
 psutil
 plotly
+kaleido
