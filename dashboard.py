@@ -20,13 +20,9 @@ Aqui podes explorar os resultados, gráficos, recursos usados e até simular pes
 def get_milvus_client():
     return MilvusClient(uri="http://localhost:19530")
 
-# 1. Comparação entre benchmarks (lado a lado)
+# 1. Seleção de benchmark (apenas um)
 folders = sorted(glob.glob("benchmarks/benchmark_*"))
-col1, col2 = st.columns(2)
-with col1:
-    benchmark_folder = st.selectbox("Escolhe o benchmark (A)", folders, key="benchA")
-with col2:
-    benchmark_folder2 = st.selectbox("Comparar com benchmark (B) (opcional)", ["Nenhum"] + folders, key="benchB")
+benchmark_folder = st.selectbox("Escolhe o benchmark", folders)
 
 @st.cache_data
 def load_csv(csv_path):
@@ -39,31 +35,20 @@ if not os.path.exists(csv_path):
     st.stop()
 df = load_csv(csv_path)
 
-if benchmark_folder2 != "Nenhum":
-    csv_path2 = os.path.join(benchmark_folder2, "resultados_benchmark.csv")
-    if os.path.exists(csv_path2):
-        df2 = load_csv(csv_path2)
-    else:
-        df2 = None
-else:
-    df2 = None
-
 # 3. Filtros dinâmicos
 with st.expander("Filtros avançados", expanded=False):
     modelos = st.multiselect("Filtrar modelos", df['modelo'].unique(), default=list(df['modelo'].unique()))
-    tempo_min, tempo_max = st.slider("Filtrar tempo de extração (s)", float(df['tempo_extracao'].min()), float(df['tempo_extracao'].max()), (float(df['tempo_extracao'].min()), float(df['tempo_extracao'].max())))
+    tempo_min, tempo_max = st.slider(
+        "Filtrar tempo de extração (s)",
+        float(df['tempo_extracao'].min()), float(df['tempo_extracao'].max()),
+        (float(df['tempo_extracao'].min()), float(df['tempo_extracao'].max()))
+    )
     df = df[df['modelo'].isin(modelos) & df['tempo_extracao'].between(tempo_min, tempo_max)]
-    if df2 is not None:
-        modelos2 = st.multiselect("Filtrar modelos (B)", df2['modelo'].unique(), default=list(df2['modelo'].unique()), key="mod2")
-        df2 = df2[df2['modelo'].isin(modelos2)]
 
 # 4. Sumário estatístico
 with st.expander("Sumário Estatístico", expanded=True):
-    st.write("**Estatísticas principais (A):**")
+    st.write("**Estatísticas principais:**")
     st.dataframe(df.describe())
-    if df2 is not None:
-        st.write("**Estatísticas principais (B):**")
-        st.dataframe(df2.describe())
 
 # 5. Mostrar tabela de dados
 st.header("Tabela de Resultados")
@@ -85,10 +70,6 @@ with tab1:
     st.subheader(f"{metrica_bar.replace('_',' ').capitalize()} por Modelo")
     fig = px.bar(df, x="modelo", y=metrica_bar, color="modelo", barmode="group",
                  title=f"{metrica_bar.replace('_',' ').capitalize()} por modelo")
-    if df2 is not None:
-        fig2 = px.bar(df2, x="modelo", y=metrica_bar, color="modelo", barmode="group",
-                      title=f"{metrica_bar.replace('_',' ').capitalize()} por modelo (B)")
-        fig.add_traces(fig2.data)
     st.plotly_chart(fig, use_container_width=True, key="barplot")
     st.help("Quanto menor, melhor para tempos e recursos.")
 
@@ -97,10 +78,6 @@ with tab2:
     fig = px.box(df, x="modelo", y=metrica_box, color="modelo",
                  title=f"Boxplot de {metrica_box.replace('_',' ').capitalize()} por modelo")
     st.plotly_chart(fig, use_container_width=True, key="boxplotA")
-    if df2 is not None:
-        fig2 = px.box(df2, x="modelo", y=metrica_box, color="modelo",
-                      title=f"Boxplot de {metrica_box.replace('_',' ').capitalize()} por modelo (B)")
-        st.plotly_chart(fig2, use_container_width=True, key="boxplotB")
     st.help("Boxplots mostram a distribuição e outliers.")
 
 with tab3:
@@ -225,6 +202,7 @@ with st.expander("Pesquisa Vetorial Real no Milvus", expanded=True):
         "openl3": 512,
         "vggish": 128,
         "wav2vec": 768,
+        "wav2vec2": 768,
     }
     dim_esperada = dimensoes_modelos.get(modelo_milvus, None)
     if dim_esperada is None:
@@ -255,20 +233,21 @@ with st.expander("Pesquisa Vetorial Real no Milvus", expanded=True):
             limit=k,
             output_fields=["id", "vector"]
         )
+        st.write(result)  # Para debug
         hits = result[0] if result and len(result) > 0 else []
         if hits:
             st.success(f"Top-{k} mais próximos para '{ficheiro_query}':")
             res_df = pd.DataFrame([
                 {
-                    "score": h.get("score"),
+                    "distance": h.get("distance"),
                     "id": h.get("id"),
-                    "vector": h.get("vector")
+                    "vector": h.get("entity", {}).get("vector")
                 } for h in hits
             ])
             st.dataframe(res_df)
-            fig = px.bar(res_df, x="id", y="score", color="score", title="Distância dos k mais próximos")
+            fig = px.bar(res_df, x="id", y="distance", color="distance", title="Distância dos k mais próximos")
             st.plotly_chart(fig, use_container_width=True, key="milvus_knn")
-            st.info("Quanto menor o score, mais próximo está o vetor.")
+            st.info("Quanto menor a distância, mais próximo está o vetor.")
         else:
             st.warning("Nenhum resultado encontrado no Milvus para esta query.")
             st.write("Dimensão do embedding:", len(embedding_query))
