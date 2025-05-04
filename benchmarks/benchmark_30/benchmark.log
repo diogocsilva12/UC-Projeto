@@ -1,0 +1,74 @@
+2025-05-04 18:31:45,688 [INFO] Processado audio_data/000010.mp3 (wav2vec2), tempo extração: 23.224s, CPU antes: 55.1, CPU depois: 38.3
+2025-05-04 18:31:49,122 [INFO] Processado audio_data/000005.mp3 (wav2vec2), tempo extração: 3.400s, CPU antes: 36.4, CPU depois: 44.2
+2025-05-04 18:31:52,507 [INFO] Processado audio_data/000002.mp3 (wav2vec2), tempo extração: 3.349s, CPU antes: 59.3, CPU depois: 44.9
+2025-05-04 18:31:55,916 [INFO] Processado audio_data/000148.mp3 (wav2vec2), tempo extração: 3.375s, CPU antes: 74.1, CPU depois: 48.1
+2025-05-04 18:31:59,339 [INFO] Processado audio_data/000193.mp3 (wav2vec2), tempo extração: 3.384s, CPU antes: 60.9, CPU depois: 45.8
+2025-05-04 18:32:02,793 [INFO] Processado audio_data/000190.mp3 (wav2vec2), tempo extração: 3.413s, CPU antes: 62.1, CPU depois: 52.8
+2025-05-04 18:32:06,961 [INFO] Processado audio_data/000140.mp3 (wav2vec2), tempo extração: 4.135s, CPU antes: 57.1, CPU depois: 43.7
+2025-05-04 18:32:11,035 [INFO] Processado audio_data/000141.mp3 (wav2vec2), tempo extração: 4.041s, CPU antes: 57.1, CPU depois: 50.7
+2025-05-04 18:32:15,086 [INFO] Processado audio_data/000182.mp3 (wav2vec2), tempo extração: 4.015s, CPU antes: 76.9, CPU depois: 49.3
+2025-05-04 18:32:15,693 [INFO] Using /var/folders/cn/9pr5xq8d40d37vvvjkm7dvg80000gn/T/tfhub_modules to cache modules.
+2025-05-04 18:32:16,267 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:32:16,270 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:32:16,699 [INFO] Processado audio_data/000010.mp3 (vggish), tempo extração: 1.561s, CPU antes: 73.3, CPU depois: 43.1
+2025-05-04 18:32:16,965 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:32:16,966 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:32:17,272 [INFO] Processado audio_data/000005.mp3 (vggish), tempo extração: 0.542s, CPU antes: 40.0, CPU depois: 64.1
+2025-05-04 18:32:17,572 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:32:17,573 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:32:17,874 [INFO] Processado audio_data/000002.mp3 (vggish), tempo extração: 0.563s, CPU antes: 42.1, CPU depois: 59.2
+2025-05-04 18:32:18,197 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:32:18,198 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:32:18,619 [INFO] Processado audio_data/000148.mp3 (vggish), tempo extração: 0.707s, CPU antes: 44.1, CPU depois: 70.5
+2025-05-04 18:32:18,928 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:32:18,928 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:32:19,388 [INFO] Processado audio_data/000193.mp3 (vggish), tempo extração: 0.738s, CPU antes: 38.7, CPU depois: 72.4
+2025-05-04 18:32:19,966 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:32:19,966 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:32:20,269 [INFO] Processado audio_data/000190.mp3 (vggish), tempo extração: 0.847s, CPU antes: 40.0, CPU depois: 51.6
+2025-05-04 18:32:20,478 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:32:20,478 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:32:20,741 [INFO] Processado audio_data/000140.mp3 (vggish), tempo extração: 0.446s, CPU antes: 40.7, CPU depois: 53.1
+2025-05-04 18:32:21,014 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:32:21,015 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:32:21,380 [INFO] Processado audio_data/000141.mp3 (vggish), tempo extração: 0.613s, CPU antes: 25.0, CPU depois: 60.2
+2025-05-04 18:32:21,599 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:32:21,599 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:32:21,891 [INFO] Processado audio_data/000182.mp3 (vggish), tempo extração: 0.486s, CPU antes: 31.6, CPU depois: 56.7
+2025-05-04 18:32:55,947 [INFO] Processado audio_data/000010.mp3 (openl3), tempo extração: 33.983s, CPU antes: 37.5, CPU depois: 95.3
+2025-05-04 18:33:30,369 [INFO] Processado audio_data/000005.mp3 (openl3), tempo extração: 34.362s, CPU antes: 24.5, CPU depois: 96.0
+2025-05-04 18:34:06,253 [INFO] Processado audio_data/000002.mp3 (openl3), tempo extração: 35.805s, CPU antes: 28.9, CPU depois: 96.3
+2025-05-04 18:34:39,510 [INFO] Processado audio_data/000148.mp3 (openl3), tempo extração: 33.180s, CPU antes: 31.1, CPU depois: 95.9
+2025-05-04 18:35:18,377 [INFO] Processado audio_data/000193.mp3 (openl3), tempo extração: 38.796s, CPU antes: 62.5, CPU depois: 96.4
+2025-05-04 18:35:57,175 [INFO] Processado audio_data/000190.mp3 (openl3), tempo extração: 38.729s, CPU antes: 35.7, CPU depois: 96.4
+2025-05-04 18:36:44,449 [INFO] Processado audio_data/000140.mp3 (openl3), tempo extração: 47.209s, CPU antes: 27.5, CPU depois: 97.2
+2025-05-04 18:37:31,412 [INFO] Processado audio_data/000141.mp3 (openl3), tempo extração: 46.901s, CPU antes: 44.7, CPU depois: 96.8
+2025-05-04 18:38:12,863 [INFO] Processado audio_data/000182.mp3 (openl3), tempo extração: 41.387s, CPU antes: 46.7, CPU depois: 96.5
+2025-05-04 18:38:17,886 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:38:17,887 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:38:18,273 [INFO] Processado audio_data/000010.mp3 (yamnet), tempo extração: 5.318s, CPU antes: 34.0, CPU depois: 37.1
+2025-05-04 18:38:21,800 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:38:21,801 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:38:22,164 [INFO] Processado audio_data/000005.mp3 (yamnet), tempo extração: 3.842s, CPU antes: 62.7, CPU depois: 34.2
+2025-05-04 18:38:25,555 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:38:25,556 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:38:25,867 [INFO] Processado audio_data/000002.mp3 (yamnet), tempo extração: 3.648s, CPU antes: 23.1, CPU depois: 39.9
+2025-05-04 18:38:29,419 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:38:29,422 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:38:29,795 [INFO] Processado audio_data/000148.mp3 (yamnet), tempo extração: 3.879s, CPU antes: 48.1, CPU depois: 39.2
+2025-05-04 18:38:33,226 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:38:33,227 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:38:33,609 [INFO] Processado audio_data/000193.mp3 (yamnet), tempo extração: 3.742s, CPU antes: 21.7, CPU depois: 39.6
+2025-05-04 18:38:37,082 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:38:37,083 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:38:37,432 [INFO] Processado audio_data/000190.mp3 (yamnet), tempo extração: 3.764s, CPU antes: 63.2, CPU depois: 38.4
+2025-05-04 18:38:41,007 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:38:41,008 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:38:41,356 [INFO] Processado audio_data/000140.mp3 (yamnet), tempo extração: 3.865s, CPU antes: 34.4, CPU depois: 39.9
+2025-05-04 18:38:44,817 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:38:44,818 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:38:45,133 [INFO] Processado audio_data/000141.mp3 (yamnet), tempo extração: 3.731s, CPU antes: 40.9, CPU depois: 39.1
+2025-05-04 18:38:48,780 [INFO] Fingerprint not found. Saved model loading will continue.
+2025-05-04 18:38:48,781 [INFO] path_and_singleprint metric could not be logged. Saved model loading will continue.
+2025-05-04 18:38:49,203 [INFO] Processado audio_data/000182.mp3 (yamnet), tempo extração: 4.018s, CPU antes: 30.8, CPU depois: 46.1
+2025-05-04 18:38:52,064 [ERROR] Erro ao gerar histograma dos scores: name 'client' is not defined

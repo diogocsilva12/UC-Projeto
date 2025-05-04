@@ -10,3 +10,6 @@ pandas
 matplotlib
 mutagen
 seaborn
+streamlit
+GPUtil
+psutil
