@@ -2,12 +2,17 @@ import streamlit as st
 import pandas as pd
 import os
 import glob
-import matplotlib.pyplot as plt
-from PIL import Image
 import numpy as np
+import plotly.express as px
+import plotly.graph_objects as go
 
 st.set_page_config(layout="wide")
 st.title("Dashboard Interativo de Benchmarks de Áudio")
+
+st.markdown("""
+Este dashboard permite analisar e comparar o desempenho de diferentes modelos de embeddings de áudio.
+Aqui podes explorar os resultados, gráficos, recursos usados e até simular pesquisas vetoriais.
+""")
 
 # 1. Escolher pasta do benchmark
 folders = sorted(glob.glob("benchmarks/benchmark_*"))
@@ -26,48 +31,69 @@ st.header("Tabela de Resultados")
 st.dataframe(df)
 st.download_button("Download CSV", df.to_csv(index=False), file_name="resultados_benchmark.csv")
 
-# 4. Mostrar todos os gráficos PNG gerados
-st.header("Gráficos do Benchmark")
-pngs = sorted([f for f in os.listdir(benchmark_folder) if f.endswith(".png")])
-for png in pngs:
-    st.subheader(png.replace(".png", "").replace("_", " ").capitalize())
-    st.image(os.path.join(benchmark_folder, png), use_column_width=True)
+# 4. Gráficos interativos com Plotly
+st.header("Gráficos Interativos")
 
-# 5. Visualização t-SNE dos embeddings (opcional)
-if "embedding" in df.columns:
-    st.header("Visualização t-SNE dos Embeddings")
-    modelo = st.selectbox("Escolhe o modelo para t-SNE", df['modelo'].unique())
-    subset = df[df['modelo'] == modelo]
-    if len(subset) > 1:
-        from sklearn.manifold import TSNE
-        embeddings = np.stack(subset['embedding'].apply(eval).values)
-        tsne = TSNE(n_components=2, random_state=42)
-        emb_2d = tsne.fit_transform(embeddings)
-        fig, ax = plt.subplots()
-        ax.scatter(emb_2d[:,0], emb_2d[:,1])
-        for i, fname in enumerate(subset['ficheiro']):
-            ax.annotate(fname, (emb_2d[i,0], emb_2d[i,1]), fontsize=8)
-        st.pyplot(fig)
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
+    "Tempo de Extração", "Tempo de Inserção", "Memória Pico", 
+    "Scatterplots", "Boxplot", "Evolução Recursos"
+])
+
+with tab1:
+    st.subheader("Tempo de Extração por Modelo")
+    fig = px.bar(df, x="modelo", y="tempo_extracao", color="modelo", barmode="group",
+                 title="Tempo de extração por modelo")
+    st.plotly_chart(fig, use_container_width=True)
+    st.info("Quanto menor, melhor.")
+
+with tab2:
+    st.subheader("Tempo de Inserção por Modelo")
+    fig = px.bar(df, x="modelo", y="tempo_insercao", color="modelo", barmode="group",
+                 title="Tempo de inserção por modelo")
+    st.plotly_chart(fig, use_container_width=True)
+    st.info("Quanto menor, melhor.")
+
+with tab3:
+    st.subheader("Pico de Memória RAM por Modelo")
+    fig = px.bar(df, x="modelo", y="memoria_peak_mb", color="modelo", barmode="group",
+                 title="Pico de memória RAM por modelo")
+    st.plotly_chart(fig, use_container_width=True)
+    st.info("Quanto menor, melhor.")
+
+with tab4:
+    st.subheader("Scatterplots")
+    scatter_type = st.selectbox("Tipo de scatter", [
+        "Tempo de extração vs Tamanho do ficheiro",
+        "Correlação duração vs tempo de extração"
+    ])
+    if scatter_type == "Tempo de extração vs Tamanho do ficheiro":
+        fig = px.scatter(df, x="tamanho_audio_mb", y="tempo_extracao", color="modelo",
+                         title="Tempo de extração vs Tamanho do ficheiro de áudio",
+                         labels={"tamanho_audio_mb": "Tamanho do ficheiro (MB)", "tempo_extracao": "Tempo de extração (s)"})
+        st.info("Procura relação entre tamanho do ficheiro e tempo de extração.")
     else:
-        st.info("Precisas de pelo menos 2 embeddings para t-SNE.")
+        fig = px.scatter(df, x="duracao_audio_s", y="tempo_extracao", color="modelo",
+                         title="Correlação entre duração do áudio e tempo de extração",
+                         labels={"duracao_audio_s": "Duração do áudio (s)", "tempo_extracao": "Tempo de extração (s)"})
+        st.info("Procura relação entre duração do áudio e tempo de extração.")
+    st.plotly_chart(fig, use_container_width=True)
 
-# 6. Mostrar logs
-log_path = os.path.join(benchmark_folder, "benchmark.log")
-if os.path.exists(log_path):
-    st.header("Logs do Benchmark")
-    with open(log_path) as f:
-        st.text(f.read())
-else:
-    st.info("Log file não encontrado.")
+with tab5:
+    st.subheader("Boxplot do Tempo de Extração por Modelo")
+    fig = px.box(df, x="modelo", y="tempo_extracao", color="modelo",
+                 title="Boxplot do tempo de extração por modelo")
+    st.plotly_chart(fig, use_container_width=True)
 
-# 7. Pesquisa vetorial interativa (opcional)
-if "embedding" in df.columns:
-    st.header("Pesquisa Vetorial Simulada (top-5 mais próximos)")
-    idx = st.selectbox("Escolhe um áudio para pesquisar", range(len(df)), format_func=lambda i: df.iloc[i]['ficheiro'])
-    emb_query = np.array(eval(df.iloc[idx]['embedding']))
-    dists = np.linalg.norm(np.stack(df['embedding'].apply(eval).values) - emb_query, axis=1)
-    top5_idx = np.argsort(dists)[:5]
-    st.write("Top-5 mais próximos:")
-    st.table(df.iloc[top5_idx][['ficheiro', 'modelo', 'tempo_extracao', 'memoria_peak_mb']])
+with tab6:
+    st.subheader("Evolução dos Recursos")
+    recurso = st.selectbox("Recurso", ["cpu_percent_after", "ram_percent_after", "gpu_usage"])
+    fig = go.Figure()
+    for modelo in df['modelo'].unique():
+        subset = df[df['modelo'] == modelo]
+        fig.add_trace(go.Scatter(x=subset.index, y=subset[recurso], mode='lines+markers', name=modelo))
+    fig.update_layout(title=f"Evolução do uso de {recurso.replace('_', ' ').upper()}",
+                      xaxis_title="Processamento (ordem dos ficheiros)",
+                      yaxis_title=f"{recurso.replace('_', ' ').capitalize()} (%)")
+    st.plotly_chart(fig, use_container_width=True)
+    st.info("Procura picos ou tendências de crescimento.")
 
-st.success("Dashboard carregado! Explora todos os gráficos e dados do benchmark.")

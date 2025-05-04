@@ -13,3 +13,4 @@ seaborn
 streamlit
 GPUtil
 psutil
+plotly
