@@ -61,9 +61,10 @@ metricas = ["tempo_extracao", "tempo_insercao", "memoria_peak_mb", "cpu_percent_
 metrica_bar = st.selectbox("Métrica para gráfico de barras", metricas, index=0)
 metrica_box = st.selectbox("Métrica para boxplot", metricas, index=0)
 
-tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs([
+tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8, tab9, tab10 = st.tabs([
     "Barras", "Boxplot", "Scatter Personalizado", 
-    "Scatterplots", "Evolução Recursos", "3D", "Download Gráfico"
+    "Scatterplots", "Evolução Recursos", "3D", "Download Gráfico",
+    "Violin Plot", "Pairplot", "Heatmap Correlação"
 ])
 
 with tab1:
@@ -144,6 +145,35 @@ with tab7:
         fig = px.scatter_3d(df, x=x3d, y=y3d, z=z3d, color="modelo", title=f"3D: {x3d} vs {y3d} vs {z3d}")
         st.plotly_chart(fig, use_container_width=True, key="download_3d")
     st.download_button("Download PNG", fig.to_image(format="png"), file_name="grafico.png")
+
+with tab8:
+    st.subheader("Violin Plot dos Tempos de Extração")
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    fig_violin, ax = plt.subplots(figsize=(10, 6))
+    sns.violinplot(data=df, x="modelo", y="tempo_extracao", ax=ax)
+    ax.set_title("Distribuição dos tempos de extração por modelo (Violin Plot)")
+    st.pyplot(fig_violin)
+    st.help("O violin plot mostra a densidade e dispersão dos tempos de extração por modelo.")
+
+with tab9:
+    st.subheader("Pairplot das Métricas Principais")
+    import seaborn as sns
+    import matplotlib.pyplot as plt
+    pairplot_fig = sns.pairplot(df, hue="modelo", vars=["tempo_extracao", "memoria_peak_mb", "tamanho_audio_mb", "duracao_audio_s"])
+    st.pyplot(pairplot_fig)
+    st.help("Pairplot permite explorar relações entre várias métricas ao mesmo tempo.")
+
+with tab10:
+    st.subheader("Mapa de Correlação entre Métricas")
+    import matplotlib.pyplot as plt
+    import seaborn as sns
+    fig_corr, ax = plt.subplots(figsize=(8, 6))
+    corr = df[["tempo_extracao", "memoria_peak_mb", "tamanho_audio_mb", "duracao_audio_s"]].corr()
+    sns.heatmap(corr, annot=True, cmap="coolwarm", ax=ax)
+    ax.set_title("Mapa de Correlação entre Métricas")
+    st.pyplot(fig_corr)
+    st.help("O heatmap mostra a correlação entre as principais métricas num só gráfico.")
 
 # 7. Visualização t-SNE dos embeddings (opcional)
 if "embedding" in df.columns:
@@ -226,6 +256,13 @@ with st.expander("Pesquisa Vetorial Real no Milvus", expanded=True):
 
     k = st.slider("Número de vizinhos mais próximos (k)", 1, 20, 5)
 
+    client = get_milvus_client()
+    num_vetores = client.get_collection_stats(collection_name)["row_count"]
+    st.info(f"A coleção '{collection_name}' tem {num_vetores} vetores.")
+
+    if num_vetores < k:
+        st.warning(f"A coleção só tem {num_vetores} vetores. Só é possível devolver até esse número de resultados.")
+
     if st.button("Pesquisar no Milvus"):
         result = client.search(
             collection_name=collection_name,
@@ -236,7 +273,7 @@ with st.expander("Pesquisa Vetorial Real no Milvus", expanded=True):
         st.write(result)  # Para debug
         hits = result[0] if result and len(result) > 0 else []
         if hits:
-            st.success(f"Top-{k} mais próximos para '{ficheiro_query}':")
+            st.success(f"Top-{len(hits)} mais próximos para '{ficheiro_query}':")
             res_df = pd.DataFrame([
                 {
                     "distance": h.get("distance"),
@@ -253,6 +290,126 @@ with st.expander("Pesquisa Vetorial Real no Milvus", expanded=True):
             st.write("Dimensão do embedding:", len(embedding_query))
             st.write("Primeiros 5 valores:", embedding_query[:5])
 
+# Pesquisa Ad-hoc: Upload de Áudio
+with st.expander("Pesquisa Ad-hoc: Upload de Áudio", expanded=False):
+    st.write("Faz upload de um ficheiro de áudio para pesquisar no Milvus com o modelo selecionado.")
+    uploaded_file = st.file_uploader("Seleciona um ficheiro de áudio", type=["wav", "mp3", "flac", "ogg"])
+    if uploaded_file is not None:
+        import tempfile
+        import librosa
+        import numpy as np
+
+        temp_path = tempfile.NamedTemporaryFile(delete=False, suffix="." + uploaded_file.name.split('.')[-1]).name
+        with open(temp_path, "wb") as f:
+            f.write(uploaded_file.read())
+        st.success("Ficheiro carregado com sucesso!")
+
+        # Seleciona modelo para extração
+        modelo_upload = st.selectbox("Modelo para extrair embedding", [
+            "wav2vec2", "vggish", "openl3", "yamnet", "clap", "ast"
+        ])
+        # Extrai embedding conforme o modelo escolhido
+        embedding = None
+        try:
+            if modelo_upload == "wav2vec2":
+                from transformers import Wav2Vec2Processor, Wav2Vec2Model
+                processor = Wav2Vec2Processor.from_pretrained("facebook/wav2vec2-base-960h")
+                model = Wav2Vec2Model.from_pretrained("facebook/wav2vec2-base-960h")
+                audio, sr = librosa.load(temp_path, sr=16000)
+                inputs = processor(audio, sampling_rate=sr, return_tensors="pt")
+                import torch
+                with torch.no_grad():
+                    outputs = model(**inputs)
+                embedding = outputs.last_hidden_state.mean(dim=1).numpy()[0]
+            elif modelo_upload == "clap":
+                from transformers import ClapProcessor, ClapModel
+                processor = ClapProcessor.from_pretrained("laion/clap-htsat-unfused")
+                model = ClapModel.from_pretrained("laion/clap-htsat-unfused")
+                audio, sr = librosa.load(temp_path, sr=48000)
+                inputs = processor(audios=audio, sampling_rate=sr, return_tensors="pt")
+                import torch
+                with torch.no_grad():
+                    embeddings = model.get_audio_features(**inputs)
+                embedding = embeddings[0].numpy()
+            elif modelo_upload == "ast":
+                from transformers import ASTFeatureExtractor, ASTModel
+                feature_extractor = ASTFeatureExtractor.from_pretrained("MIT/ast-finetuned-audioset-10-10-0.4593")
+                model = ASTModel.from_pretrained("MIT/ast-finetuned-audioset-10-10-0.4593")
+                audio, sr = librosa.load(temp_path, sr=16000)
+                inputs = feature_extractor(audio, sampling_rate=sr, return_tensors="pt")
+                import torch
+                with torch.no_grad():
+                    outputs = model(**inputs)
+                embedding = outputs.last_hidden_state.mean(dim=1).numpy()[0]
+            elif modelo_upload == "vggish":
+                import tensorflow_hub as hub
+                vggish_model = hub.load('https://tfhub.dev/google/vggish/1')
+                audio, sr = librosa.load(temp_path, sr=16000)
+                if len(audio.shape) > 1:
+                    audio = np.mean(audio, axis=1)
+                embedding = vggish_model(audio).numpy()
+                if embedding.ndim > 1:
+                    embedding = np.mean(embedding, axis=0)
+            elif modelo_upload == "yamnet":
+                import tensorflow_hub as hub
+                import tensorflow as tf
+                yamnet_model = hub.load('https://tfhub.dev/google/yamnet/1')
+                audio, sr = librosa.load(temp_path, sr=16000)
+                waveform = tf.convert_to_tensor(audio, dtype=tf.float32)
+                scores, embeddings, spectrogram = yamnet_model(waveform)
+                embedding = np.mean(embeddings.numpy(), axis=0)
+            elif modelo_upload == "openl3":
+                import openl3
+                audio, sr = librosa.load(temp_path, sr=48000)
+                if len(audio.shape) > 1:
+                    audio = np.mean(audio, axis=1)
+                emb, _ = openl3.get_audio_embedding(audio, sr, content_type="music", embedding_size=512)
+                if emb.shape[0] > 1:
+                    embedding = np.mean(emb, axis=0)
+                else:
+                    embedding = emb.squeeze()
+            else:
+                st.error("Modelo não suportado.")
+        except Exception as e:
+            st.error(f"Erro ao extrair embedding: {e}")
+            embedding = None
+
+        if embedding is not None:
+            st.success(f"Embedding extraído com sucesso! Dimensão: {len(embedding)}")
+            # Pesquisa no Milvus
+            client = get_milvus_client()
+            collection_name = f"audio_{modelo_upload}"
+            k = st.slider("Número de vizinhos mais próximos (k)", 1, 20, 5, key="k_upload")
+            if st.button("Pesquisar no Milvus com este embedding"):
+                try:
+                    result = client.search(
+                        collection_name=collection_name,
+                        data=[embedding.tolist()],
+                        limit=k,
+                        output_fields=["id", "filename", "title", "duration", "authors", "genre"]
+                    )
+                    hits = result[0] if result and len(result) > 0 else []
+                    if hits:
+                        st.success(f"Top-{k} mais próximos:")
+                        res_df = pd.DataFrame([
+                            {
+                                "distance": h.get("distance"),
+                                "id": h.get("id"),
+                                "filename": h.get("entity", {}).get("filename"),
+                                "title": h.get("entity", {}).get("title"),
+                                "duration": h.get("entity", {}).get("duration"),
+                                "authors": h.get("entity", {}).get("authors"),
+                                "genre": h.get("entity", {}).get("genre"),
+                            } for h in hits
+                        ])
+                        st.dataframe(res_df)
+                        fig = px.bar(res_df, x="id", y="distance", color="distance", title="Distância dos k mais próximos")
+                        st.plotly_chart(fig, use_container_width=True, key="milvus_knn_upload")
+                    else:
+                        st.warning("Nenhum resultado encontrado no Milvus para este embedding.")
+                except Exception as e:
+                    st.error(f"Erro ao pesquisar no Milvus: {e}")
+
 # 10. Mostrar logs (colapsável)
 log_path = os.path.join(benchmark_folder, "benchmark.log")
 with st.expander("Logs do Benchmark", expanded=False):
@@ -261,6 +418,8 @@ with st.expander("Logs do Benchmark", expanded=False):
             st.text(f.read())
     else:
         st.info("Log file não encontrado.")
+
+
 
 st.success("Dashboard carregado! Explora todos os gráficos e dados do benchmark.")
 
