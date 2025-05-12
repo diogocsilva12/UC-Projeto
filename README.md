@@ -60,3 +60,15 @@ def safe_get_milvus_client():
 @st.cache_resource
 def get_milvus_client():
     return safe_get_milvus_client()
+
+
+COSINE
+Cosine similarity uses the cosine of the angle between two sets of vectors to measure how similar they are.
+
+Um valor maior indica uma maior similaridade.
+
+[-1, 1]
+
+
+WIKIPEDIA:
+In data analysis, cosine similarity is a measure of similarity between two non-zero vectors defined in an inner product space. Cosine similarity is the cosine of the angle between the vectors; that is, it is the dot product of the vectors divided by the product of their lengths.
