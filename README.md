@@ -1,34 +1,23 @@
-# UC-Projeto
- 
-Notas Importantes
-1. Inicialização: Para iniciar o projeto, executar:
-    ```bash
-    docker-compose up -d
-    ```
+## Como usar o projeto
 
-2. Interface Web: Aceder a http://localhost:8000 para ver a interface Attu
+### 1. Levantar o Milvus e dependências
 
-3. Testes:
+```bash
+docker-compose up -d
+```
 
-- Teste de ligação: python test_connection.py
-- Teste da aplicação principal: python main.py
-
-4. Embeddings de Áudio: Para utilizar, substituir os vetores de exemplo por embeddings reais gerados a partir de modelos como Wav2Vec2, VGGish ou OpenL3. r (não implementada). Devemos escolher o Wav2Vec 2, pois é o mais utilizado para áudio.
-
-5. Dimensões: Temos que certificar que escolhemos a dimensão correta para os embeddings. O Wav2Vec 2 tem 768 dimensões, enquanto o VGGish tem 128. O OpenL3 tem 6144 dimensões. Para o nosso projeto, vamos usar o Wav2Vec 2.
-
-6. Persistência: O Milvus armazena os dados em volumes persistentes, que são criados automaticamente pelo Docker. Não apague o dir "volumes/" após parar os serviços.
+Acede à interface Attu em: [http://localhost:8000](http://localhost:8000)
 
 
-# Estrutura do Projeto
-```plaintext
-UC-Projeto/
-├── docker-compose.yml      # Configuração dos serviços Docker
-├── db_config.py            # Configuração da ligação à base de dados Milvus
-├── audio_db.py             # Funções para manipular vetores de áudio na BD
-├── main.py                 # Ponto de entrada principal da aplicação
-├── test_connection.py      # Script para testar a ligação ao Milvus
-├── app.py                  # (Vazio) Reservado para interface de aplicação
-├── audio_data/             # Diretório para guardar ficheiros de áudio
-└── volumes/    
-´´´            # Dados persistentes do Milvus (criados pelo Docker)
+### 3. Correr o dashboard interativo
+
+```bash
+streamlit run src/dashboard.py
+```
+
+### 4. Testar ligação ao Milvus
+
+```bash
+python src/test_connection.py
+```
+
