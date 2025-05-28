@@ -1,1 +1,62 @@
-/audio_data
+# Virtual environments
+benchmark_venv/
+venv/
+env/
+.env/
+.venv/
+ENV/
+
+# Execution scripts
+script_execucao.py
+script_execucao.sh
+*.sh
+*.bat
+
+
+
+
+
+# Python cache files
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# OS specific files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE specific files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# Large data files
+audio_data/
+*.wav
+*.mp3
+*.flac
+*.ogg
+
+# Environment configuration
+.env
+.env.local
+
+volumes/
+

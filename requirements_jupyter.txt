@@ -33,3 +33,6 @@ notebook>=6.4.0
 
 # File handling and IO operations
 python-dotenv>=0.19.0
+
+# Streamlit
+streamlit>=0.88.0

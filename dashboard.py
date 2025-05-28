@@ -8,6 +8,8 @@ import plotly.graph_objects as go
 from pymilvus import MilvusClient
 import ast
 
+#Dashboard no streamlit
+
 st.set_page_config(layout="wide")
 st.title("Dashboard Interativo de Benchmarks de Áudio")
 
